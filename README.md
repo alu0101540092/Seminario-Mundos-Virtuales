@@ -6,11 +6,11 @@
 
 **Método usado:** en Unity se usa `Matrix4x4.TRS(position, Quaternion.Euler(...), scale)` para obtener la matriz modelo $(local → world)$. Unity aplica los eulers en orden $Z → X → Y$.
 
+![Ejercicio 15](images/exercise_15.png)
+
 **Código usado:**
 
 ```csharp
 Matrix4x4 model = Matrix4x4.TRS(new Vector3(3, 1, 1), Quaternion.Euler(45, 0, 45), Vector3.one);
 Debug.Log(model);
 ```
-
-![Ejercicio 15](images/exercise_15.png)
