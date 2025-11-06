@@ -92,6 +92,24 @@ Sí, la afirmación es correcta. Si cambiamos el valor de *projection* a *orthog
 
 ## 7. Especifica las rotaciones que se han indicado en los ejercicios previos con la utilidad quaternion.
 
+Para trasladar la cámara 2 metros en cada eje y luego rotarla 30° alrededor del eje Y con la utilidad quaternion lo podemos hacer de la siguiente forma:
+
+```csharp
+Quaternion rotacionGlobalY = Quaternion.Euler(0f, 30f, 0f); 
+transform.Translate(new Vector3(2f, 2f, 2f), Space.World);
+transform.rotation = rotacionGlobalY * transform.rotation;
+```
+
+Para crear el valor de la rotación con los quaternions hay dos formas de hacerlo, la primera es como hemos mostrado previamente, con *Quaternion.Euler*, que es la forma más común y lo crea a partir de los ángulos de Euler, o con *Quaternion.AngleAxis*, que es el más explícito pues le puedes decir el ángulo y el eje sobre el que quieres rotar directamente.
+
+Ahora, para primero hacer la rotación y luego la traslación, sería algo así:
+
+```csharp
+Quaternion rotacionGlobalY = Quaternion.Euler(0f, 30f, 0f);
+transform.rotation = rotacionGlobalY * transform.rotation;
+transform.Translate(new Vector3(2f, 2f, 2f), Space.Self);
+```
+
 ---
 
 ## 8. ¿Cómo puedes averiguar la matriz de proyección en perspectiva que se ha usado para proyectar la escena al último frame renderizado?
