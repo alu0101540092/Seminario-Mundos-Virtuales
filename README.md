@@ -1,6 +1,6 @@
 # Mundos virtuales. Introducción a la programación de gráficos 3D
 
-## 1. ¿Qué funciones se pueden usar en los scripts de Unity para llevar a cabo traslaciones, rotaciones y escalados?.
+## 1. ¿Qué funciones se pueden usar en los scripts de Unity para llevar a cabo traslaciones, rotaciones y escalados?
 
 En Unity, los objetos se manipulan principalmente a través de su componente Transform, que controla su posición, rotación y escala en el espacio.
 Las funciones más comunes para realizar estos cambios desde los scripts son:
@@ -26,7 +26,7 @@ También pueden utilizarse funciones combinadas como transform.SetPositionAndRot
 
 ---
 
-## 2. ¿Cómo trasladarías la cámara 2 metros en cada uno de los ejes y luego la rotas 30º alrededor del eje Y?. Rota la cámara alrededor del eje Y 30ª y desplázala 2 metros en cada uno de los ejes. ¿Obtendrías el mismo resultado en ambos casos?. Justifica el resultado.
+## 2. ¿Cómo trasladarías la cámara 2 metros en cada uno de los ejes y luego la rotas 30º alrededor del eje Y? Rota la cámara alrededor del eje Y 30ª y desplázala 2 metros en cada uno de los ejes. ¿Obtendrías el mismo resultado en ambos casos? Justifica el resultado.
 
 Para trasladar la cámara 2 metros en cada eje y luego rotarla 30° alrededor del eje Y, se puede hacer así:
 
@@ -59,11 +59,11 @@ En resumen, el resultado solo será igual si todas las operaciones se hacen en e
 
 ## 4. Sitúa la esfera de radio 1 en el campo de visión de la cámara y configura el volumen de vista para que la deje fuera de la vista.
 
-![Ejercicio 3](images/exercise_4.png)
+![Ejercicio 4](images/exercise_4.png)
 
 ---
 
-## 5. ¿Cómo puedes aumentar el ángulo de la cámara?. ¿Qué efecto tiene disminuir el ángulo de la cámara?
+## 5. ¿Cómo puedes aumentar el ángulo de la cámara? ¿Qué efecto tiene disminuir el ángulo de la cámara?
 
 Puedes aumentar el ángulo de visión de la cámara modificando su propiedad Field of View (FOV), por ejemplo:
 
@@ -73,6 +73,36 @@ Camera.main.fieldOfView += 5f;
 
 Aumentar el FOV amplía el campo de visión, permitiendo ver una zona mayor de la escena, pero también genera una mayor distorsión: los objetos parecen más pequeños y las líneas cercanas a los bordes se curvan ligeramente generando el efecto “ojo de pez”.
 Por el contrario, disminuir el ángulo reduce el campo de visión, lo que produce un efecto de zoom. Se observa una porción más pequeña del entorno, los objetos parecen más grandes y cercanos, y se reduce la sensación de profundidad.
+
+---
+
+## 6. ¿Es correcta la siguiente afirmación?: *Para realizar la proyección al espacio 2D, en el inspector de la cámara, cambiaremos el valor de projection, asignándole el valor de orthographic*
+
+Sí, la afirmación es correcta. Si cambiamos el valor de *projection* a *orthographic* pasaremos a tener una proyección 2D.
+
+*Perspective*:
+
+![Ejercicio 6: Perspective](images/exercise_6_perspective.png)
+
+*Orthographic*:
+
+![Ejercicio 6: Orthographic](images/exercise_6_orthographic.png)
+
+---
+
+## 7. Especifica las rotaciones que se han indicado en los ejercicios previos con la utilidad quaternion.
+
+---
+
+## 8. ¿Cómo puedes averiguar la matriz de proyección en perspectiva que se ha usado para proyectar la escena al último frame renderizado?
+
+---
+
+## 9. ¿Cómo puedes averiguar la matriz de proyección en perspectiva ortográfica que se ha usado para proyectar la escena al último frame renderizado?
+
+---
+
+## 10. ¿Cómo puedes obtener la matriz de transformación entre el sistema de coordenadas local y el mundial?
 
 ---
 
