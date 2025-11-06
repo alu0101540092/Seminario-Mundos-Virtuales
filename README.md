@@ -6,18 +6,21 @@ En Unity, los objetos se manipulan principalmente a través de su componente Tra
 Las funciones más comunes para realizar estos cambios desde los scripts son:
 
 #### Traslación:
+
 ```csharp
 transform.position permite asignar una posición absoluta al objeto.
 transform.Translate(Vector3 desplazamiento, Space espacio) desplaza el objeto una cantidad determinada, pudiendo hacerlo en el sistema de coordenadas local (por defecto) o global.
 ```
 
 #### Rotación:
+
 ```csharp
 transform.rotation o transform.eulerAngles establecen una rotación absoluta.
 transform.Rotate(x, y, z, Space espacio) aplica una rotación incremental.
 ```
 
 #### Escalado:
+
 ```csharp
 transform.localScale = new Vector3(x, y, z) modifica la escala del objeto en cada eje.
 ```
@@ -76,15 +79,15 @@ Por el contrario, disminuir el ángulo reduce el campo de visión, lo que produc
 
 ---
 
-## 6. ¿Es correcta la siguiente afirmación?: *Para realizar la proyección al espacio 2D, en el inspector de la cámara, cambiaremos el valor de projection, asignándole el valor de orthographic*
+## 6. ¿Es correcta la siguiente afirmación?: _Para realizar la proyección al espacio 2D, en el inspector de la cámara, cambiaremos el valor de projection, asignándole el valor de orthographic_
 
-Sí, la afirmación es correcta. Si cambiamos el valor de *projection* a *orthographic* pasaremos a tener una proyección 2D.
+Sí, la afirmación es correcta. Si cambiamos el valor de _projection_ a _orthographic_ pasaremos a tener una proyección 2D.
 
-*Perspective*:
+_Perspective_:
 
 ![Ejercicio 6: Perspective](images/exercise_6_perspective.png)
 
-*Orthographic*:
+_Orthographic_:
 
 ![Ejercicio 6: Orthographic](images/exercise_6_orthographic.png)
 
@@ -95,12 +98,12 @@ Sí, la afirmación es correcta. Si cambiamos el valor de *projection* a *orthog
 Para trasladar la cámara 2 metros en cada eje y luego rotarla 30° alrededor del eje Y con la utilidad quaternion lo podemos hacer de la siguiente forma:
 
 ```csharp
-Quaternion rotacionGlobalY = Quaternion.Euler(0f, 30f, 0f); 
+Quaternion rotacionGlobalY = Quaternion.Euler(0f, 30f, 0f);
 transform.Translate(new Vector3(2f, 2f, 2f), Space.World);
 transform.rotation = rotacionGlobalY * transform.rotation;
 ```
 
-Para crear el valor de la rotación con los quaternions hay dos formas de hacerlo, la primera es como hemos mostrado previamente, con *Quaternion.Euler*, que es la forma más común y lo crea a partir de los ángulos de Euler, o con *Quaternion.AngleAxis*, que es el más explícito pues le puedes decir el ángulo y el eje sobre el que quieres rotar directamente.
+Para crear el valor de la rotación con los quaternions hay dos formas de hacerlo, la primera es como hemos mostrado previamente, con _Quaternion.Euler_, que es la forma más común y lo crea a partir de los ángulos de Euler, o con _Quaternion.AngleAxis_, que es el más explícito pues le puedes decir el ángulo y el eje sobre el que quieres rotar directamente.
 
 Ahora, para primero hacer la rotación y luego la traslación, sería algo así:
 
@@ -116,7 +119,7 @@ transform.Translate(new Vector3(2f, 2f, 2f), Space.Self);
 
 Depende de dónde la necesitemos, si en un script de C# o dentro de un shader. Como lo que estamos utilizando principalmente son los scripts, vamos a centrarnos en esa opción.
 
-La obtenemos directamente de la cámara, y para asegurarnos de que es la del último frame, o la que se usará para el frame actual, debemos leerla en *LateUpdate()*, para garantizar que todos los movimientos de la cámara ya se han calculado. El script seguiría la siguiente forma:
+La obtenemos directamente de la cámara, y para asegurarnos de que es la del último frame, o la que se usará para el frame actual, debemos leerla en _LateUpdate()_, para garantizar que todos los movimientos de la cámara ya se han calculado. El script seguiría la siguiente forma:
 
 ```csharp
 using UnityEngine;
@@ -151,19 +154,19 @@ De esta forma, convertimos la anterior a la matriz que la GPU realmente usará.
 
 ## 9. ¿Cómo puedes averiguar la matriz de proyección en perspectiva ortográfica que se ha usado para proyectar la escena al último frame renderizado?
 
-Lo podemos comprobar con el mismo código que en el ejercicio anterior, pues Unity da automáticamente la matriz correcta según el modo en el que esté la cámara. La propiedad *cam.projectionMatrix* consultará la configuración de la cámara, y si ésta está en modo *Orthographic* pues nos devolverá la matriz de proyección ortográfica.
+Lo podemos comprobar con el mismo código que en el ejercicio anterior, pues Unity da automáticamente la matriz correcta según el modo en el que esté la cámara. La propiedad _cam.projectionMatrix_ consultará la configuración de la cámara, y si ésta está en modo _Orthographic_ pues nos devolverá la matriz de proyección ortográfica.
 
-Si quisiéramos saber en qué modo está la cámara, podríamos usar la propiedad *cam.isOrthographic*.
+Si quisiéramos saber en qué modo está la cámara, podríamos usar la propiedad _cam.isOrthographic_.
 
 ---
 
 ## 10. ¿Cómo puedes obtener la matriz de transformación entre el sistema de coordenadas local y el mundial?
 
-Se pueden obtener directamente desde el componente *Transform*, con dos propiedades que ofrece Unity, ya que las calcula en cada frame y combinan la posición, rotación y escala del objeto en una sola matriz.
+Se pueden obtener directamente desde el componente _Transform_, con dos propiedades que ofrece Unity, ya que las calcula en cada frame y combinan la posición, rotación y escala del objeto en una sola matriz.
 
-Para obtener la matriz de transformación de local a mundial, también denominada "Matriz de Modelo", la propiedad toma un punto en el sistema de coordenadas local del objeto, donde el *transfomr* es *(0, 0, 0)*, y lo transforma a su posición en el sistema de coordenadas mundial.
+Para obtener la matriz de transformación de local a mundial, también denominada "Matriz de Modelo", la propiedad toma un punto en el sistema de coordenadas local del objeto, donde el _transfomr_ es _(0, 0, 0)_, y lo transforma a su posición en el sistema de coordenadas mundial.
 
-Un ejemplo de uso de esta propiedad (*localToWorldMatrix*) sería como sigue:
+Un ejemplo de uso de esta propiedad (_localToWorldMatrix_) sería como sigue:
 
 ```csharp
 void Update() {
@@ -174,12 +177,12 @@ void Update() {
 }
 ```
 
-Para la matriz de transformación de mundial a local usamos la propiedad *worldToLocalMatrix*, que es la inversa de la anterior. Toma un punto en el sistema de coordenadas mundial y nos dice dónde se encuentra ese punto relativo al *transform* del objeto. A pesar de ser lo mismo que, simplemente, realizarle la inversa a la anterior, es mejor usar la propiedad que ofrece Unity, ya que al darnos la matriz ya calculada nos ahorra el coste del cálculo de la inversa de la matriz.
+Para la matriz de transformación de mundial a local usamos la propiedad _worldToLocalMatrix_, que es la inversa de la anterior. Toma un punto en el sistema de coordenadas mundial y nos dice dónde se encuentra ese punto relativo al _transform_ del objeto. A pesar de ser lo mismo que, simplemente, realizarle la inversa a la anterior, es mejor usar la propiedad que ofrece Unity, ya que al darnos la matriz ya calculada nos ahorra el coste del cálculo de la inversa de la matriz.
 
 Un ejemplo de uso de esta propiedad sería el siguiente, donde calculamos si un objeto está delante o detrás de nosotros:
 
 ```csharp
-public Transform otherObject; 
+public Transform otherObject;
 
 void Update() {
   if (otherObject == null) return;
@@ -225,9 +228,21 @@ Debug.Log(model);
 
 ---
 
-## 17. Dibujar en un programa de dibujo el recorrido de las coordenadas de un vértice específico del cubo rojo. Indicar cómo cambia su valor en cada espacio. Aplicar la transformación manualmente a un punto (por ejemplo, el vértice $(0.5, 0.5, 0.5)$) y registrar los resultados paso a paso.
+## 17. Dibujar en un programa de dibujo el recorrido de las coordenadas de un vértice específico del cubo rojo. Indicar cómo cambia su valor en cada espacio. Aplicar la transformación manualmente a un punto y registrar los resultados paso a paso.
 
-El Real Madrid recayó en los pecados cometidos en el Metropolitano. Ante un Liverpool intenso, organizado y bien armado cedió la segunda derrota de la temporada que no es grave a nivel estadístico, con la Champions encarrilada. Sí en lo anímico, de nuevo inferior en los duelos, en el juego aéreo, en la intensidad hasta el gol. No recibió una goleada porque Courtois ve una camiseta roja y se convierte en un gigante.
+### Tabla paso a paso (valores numéricos)
+
+|                 Paso | Vector / Valor                                                                                                                                                                        | Comentario                                                           |
+| -------------------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+|                Local | **(0.5, 0.5, 0.5, 1.0)**                                                                                                                                                              | Vértice en el sistema local del cubo.                                |
+|   Modelo (M = T·R·S) | Matriz 4×4:<br>`[0.70710678 -0.70710678  0.         3.        ]`<br>`[0.5        0.5       -0.70710678 1.        ]`<br>`[0.5        0.5        0.70710678 1.        ]`<br>`[0 0 0 1]` | Matriz que transforma local → world (traslación 3,1,1 + rotaciones). |
+|                World | **(3.00000000, 1.14644661, 1.85355339, 1.00000000)**                                                                                                                                  | p_world = M \* p_local                                               |
+|        Camera / View | **(3.00000000, 1.14644661, 1.85355339, 1.00000000)**                                                                                                                                  | Con cámara en el origen sin rotación, world = camera.                |
+|                 Clip | **( 2.92283574, 1.98570378, -2.45484591, -1.85355339 )**                                                                                                                              | Resultado al aplicar la matriz de proyección.                        |
+|       NDC (clip / w) | **(-1.57688241, -1.07129570, 1.32439989)**                                                                                                                                            | Normalizado; x,y fuera de [-1,1] → fuera de pantalla.                |
+| Viewport (1920×1080) | **x ≈ -553.8 px, y ≈ -38.5 px**                                                                                                                                                       | Conversión: x*px = (ndc.x+1)/2 * 1920 ; y*px = (ndc.y+1)/2 * 1080.   |
+
+> **Observación:** en este ejemplo el punto final queda fuera del viewport visible. Ajustando la posición/rotación del cubo o la cámara (o la FOV/near) se puede hacer que el punto quede dentro.
 
 ---
 
