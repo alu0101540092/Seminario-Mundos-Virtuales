@@ -151,6 +151,10 @@ De esta forma, convertimos la anterior a la matriz que la GPU realmente usará.
 
 ## 9. ¿Cómo puedes averiguar la matriz de proyección en perspectiva ortográfica que se ha usado para proyectar la escena al último frame renderizado?
 
+Lo podemos comprobar con el mismo código que en el ejercicio anterior, pues Unity da automáticamente la matriz correcta según el modo en el que esté la cámara. La propiedad *cam.projectionMatrix* consultará la configuración de la cámara, y si ésta está en modo *Orthographic* pues nos devolverá la matriz de proyección ortográfica.
+
+Si quisiéramos saber en qué modo está la cámara, podríamos usar la propiedad *cam.isOrthographic*.
+
 ---
 
 ## 10. ¿Cómo puedes obtener la matriz de transformación entre el sistema de coordenadas local y el mundial?
