@@ -114,6 +114,39 @@ transform.Translate(new Vector3(2f, 2f, 2f), Space.Self);
 
 ## 8. ¿Cómo puedes averiguar la matriz de proyección en perspectiva que se ha usado para proyectar la escena al último frame renderizado?
 
+Depende de dónde la necesitemos, si en un script de C# o dentro de un shader. Como lo que estamos utilizando principalmente son los scripts, vamos a centrarnos en esa opción.
+
+La obtenemos directamente de la cámara, y para asegurarnos de que es la del último frame, o la que se usará para el frame actual, debemos leerla en *LateUpdate()*, para garantizar que todos los movimientos de la cámara ya se han calculado. El script seguiría la siguiente forma:
+
+```csharp
+using UnityEngine;
+
+public class ProjectionMatrixLogger : MonoBehaviour {
+  private Camera cam;
+  private Matrix4x4 projectionMatrixCPU;
+
+  void Start() {
+    cam = GetComponent<Camera>();
+    if (cam == null) {
+      cam = Camera.main;
+    }
+  }
+
+  void LateUpdate() {
+    projectionMatrixCPU = cam.projectionMatrix;
+    Debug.Log(projectionMatrixCPU);
+  }
+}
+```
+
+Esa es la matriz de proyección "ideal" calculada por Unity para usar en cálculos de CPU. Sin embargo, la matriz que la GPU usa para renderizar no es exactamente la misma que esa, pues Unity realiza una conversión final justo antes de enviar la matriz al shader. Para obtener dicha matriz, lo que debemos usar en su lugar es:
+
+```csharp
+GL.GetGPUProjectionMatrix(matrizCPU, bool renderIntoTexture)
+```
+
+De esta forma, convertimos la anterior a la matriz que la GPU realmente usará.
+
 ---
 
 ## 9. ¿Cómo puedes averiguar la matriz de proyección en perspectiva ortográfica que se ha usado para proyectar la escena al último frame renderizado?
