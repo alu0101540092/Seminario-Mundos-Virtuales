@@ -159,6 +159,41 @@ Si quisiéramos saber en qué modo está la cámara, podríamos usar la propieda
 
 ## 10. ¿Cómo puedes obtener la matriz de transformación entre el sistema de coordenadas local y el mundial?
 
+Se pueden obtener directamente desde el componente *Transform*, con dos propiedades que ofrece Unity, ya que las calcula en cada frame y combinan la posición, rotación y escala del objeto en una sola matriz.
+
+Para obtener la matriz de transformación de local a mundial, también denominada "Matriz de Modelo", la propiedad toma un punto en el sistema de coordenadas local del objeto, donde el *transfomr* es *(0, 0, 0)*, y lo transforma a su posición en el sistema de coordenadas mundial.
+
+Un ejemplo de uso de esta propiedad (*localToWorldMatrix*) sería como sigue:
+
+```csharp
+void Update() {
+  Matrix4x4 modelMatrix = transform.localToWorldMatrix;
+
+  Vector3 localPoint = new Vector3(0, 0, 1);
+  Vector4 worldPoint = modelMatrix * new Vector4(localPoint.x, localPoint.y, localPoint.z, 1.0f);
+}
+```
+
+Para la matriz de transformación de mundial a local usamos la propiedad *worldToLocalMatrix*, que es la inversa de la anterior. Toma un punto en el sistema de coordenadas mundial y nos dice dónde se encuentra ese punto relativo al *transform* del objeto. A pesar de ser lo mismo que, simplemente, realizarle la inversa a la anterior, es mejor usar la propiedad que ofrece Unity, ya que al darnos la matriz ya calculada nos ahorra el coste del cálculo de la inversa de la matriz.
+
+Un ejemplo de uso de esta propiedad sería el siguiente, donde calculamos si un objeto está delante o detrás de nosotros:
+
+```csharp
+public Transform otherObject; 
+
+void Update() {
+  if (otherObject == null) return;
+
+  Matrix4x4 inverseModelMatrix = transform.worldToLocalMatrix;
+  Vector3 otherWorldPos = otherObject.position;
+  Vector4 localPoint = inverseModelMatrix * new Vector4(otherWorldPos.x, otherWorldPos.y, otherWorldPos.z, 1.0f);
+
+  if (localPoint.z > 0) {
+    // El 'otherObject' está delante de este objeto
+  }
+}
+```
+
 ---
 
 ## 15. ¿Cómo puedes calcular las coordenadas del sistema de referencia de un objeto con las siguientes propiedades del Transform?
