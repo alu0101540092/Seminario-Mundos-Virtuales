@@ -199,6 +199,117 @@ void Update() {
 
 ---
 
+## 11. ¿Cómo puedes obtener la matriz para cambiar al sistema de referencia de vista?
+
+En Unity, la **matriz de vista (View Matrix)** transforma coordenadas del **mundo** al **sistema de referencia de la cámara**.
+Puedes obtenerla directamente desde la cámara activa con:
+
+```csharp
+Matrix4x4 viewMatrix = Camera.main.worldToCameraMatrix;
+```
+
+Esta matriz es la que usa Unity internamente para pasar de coordenadas de **mundo** a **vista**
+(también conocida como "eye space").
+Si quieres cambiar tú mismo un punto del mundo al sistema de vista:
+
+```csharp
+Vector3 worldPos = transform.position;
+Vector3 viewPos = Camera.main.worldToCameraMatrix.MultiplyPoint(worldPos);
+```
+
+---
+
+## 12. Especifica la matriz de proyección usada en un instante de la ejecución del ejercicio 1
+
+La **matriz de proyección (Projection Matrix)** transforma de coordenadas de vista a coordenadas de clip (las que usa el pipeline gráfico antes de la rasterización).
+
+Se obtiene con:
+
+```csharp
+Matrix4x4 projectionMatrix = Camera.main.projectionMatrix;
+```
+
+Esta matriz depende del tipo de cámara:
+
+* En **Perspective**, contiene los parámetros del campo de visión (FOV), aspecto, plano cercano y lejano.
+* En **Orthographic**, contiene los límites del volumen ortográfico.
+
+---
+
+## 13. Especifica la matriz de modelo y vista de la escena del ejercicio 1
+
+**Matriz de modelo**
+
+Es la transformación del objeto respecto al **mundo**.
+Se obtiene de:
+
+```csharp
+Matrix4x4 modelMatrix = transform.localToWorldMatrix;
+```
+
+Esta matriz incluye la **traslación, rotación y escala** del objeto.
+
+**Matriz de vista**
+
+Como antes, se obtiene de la cámara:
+
+```csharp
+Matrix4x4 viewMatrix = Camera.main.worldToCameraMatrix;
+```
+
+---
+
+## 14.  Aplica una rotación en el `Start()` de uno de los objetos y muestra la matriz de cambio al sistema de referencias mundial
+
+La **matriz de cambio al sistema de referencia mundial** (de local → mundo) es la misma `localToWorldMatrix`.
+Si aplicas una rotación en `Start()`, puedes mostrar cómo cambia.
+
+Ejemplo completo:
+
+```csharp
+using UnityEngine;
+
+public class CubeBehavior : MonoBehaviour
+{
+    public int frameDelay = 120;
+
+    private Color color;
+    private int frameCount;
+
+    void Start()
+    {
+        color = new Color(Random.value, Random.value, Random.value);
+        GetComponent<Renderer>().material.color = color;
+        transform.Rotate(0, 45, 0);
+
+        Debug.Log("Matriz de Modelo (Local a Mundo):\n" + transform.localToWorldMatrix);
+        Debug.Log("Matriz de Vista (Mundo a Cámara):\n" + Camera.main.worldToCameraMatrix);
+        Debug.Log("Matriz de Proyección:\n" + Camera.main.projectionMatrix);
+    }
+
+    void Update()
+    {
+        frameCount++;
+
+        if (frameCount >= frameDelay)
+        {
+            frameCount = 0;
+
+            int index = Random.Range(0, 3);
+            if (index == 0) color.r = Random.value;
+            if (index == 1) color.g = Random.value;
+            if (index == 2) color.b = Random.value;
+
+            GetComponent<Renderer>().material.color = color;
+        }
+    }
+}
+```
+
+![Ejercicio 14](images/ej14.gif)
+
+---
+
 ## 15. ¿Cómo puedes calcular las coordenadas del sistema de referencia de un objeto con las siguientes propiedades del Transform?
 
 **Transform:** Position = $(3, 1, 1)$, Rotation = $(45, 0, 45)$, Scale = $(1, 1, 1)$.
